@@ -13,6 +13,7 @@
 | 1234 | 크리스마스 트리 | Python | [1234.py](Python/1234.py) |
 | 1325 | 효율적인 해킹 | Java | [1325.java](Java/1325.java) |
 | 2557 | Hello World | Python | [2557.py](Python/2557.py) |
+| 5123 | Hiking Trails | Python | [5123.py](Python/5123.py) |
 | 12351 | Hedgemony (Small) | Python | [12351.py](Python/12351.py) |
 
 ## 📌 사용법
