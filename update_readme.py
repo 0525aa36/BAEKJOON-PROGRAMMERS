@@ -12,6 +12,9 @@ LANGUAGES = {
 # README 파일 경로
 README_PATH = "README.md"
 
+import requests
+from bs4 import BeautifulSoup
+
 def fetch_problem_title(problem_number):
     """ 백준 문제 제목 가져오기 """
     url = f"https://www.acmicpc.net/problem/{problem_number}"
@@ -24,11 +27,12 @@ def fetch_problem_title(problem_number):
         response.raise_for_status()
         
         soup = BeautifulSoup(response.text, "html.parser")
-        title_tag = soup.find("span", class_="problem-title")
+        title_tag = soup.find("span", id="problem_title")  # ✅ 문제 제목이 있는 태그 확인
         return title_tag.text.strip() if title_tag else "제목 없음"
     
     except requests.RequestException:
         return "제목 불러오기 실패"
+
 
 def get_solved_problems():
     problems = []
