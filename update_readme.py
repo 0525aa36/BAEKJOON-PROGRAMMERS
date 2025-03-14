@@ -66,7 +66,7 @@ def get_solved_problems():
                     commit_time = commit_order.get(f"{folder}/{filename}", float("inf"))
                     problems.append((commit_time, problem_number, title, lang, filename))
     
-    return sorted(problems, key=lambda x: x[0])  # 🔹 커밋된 순서대로 정렬
+    return sorted(problems, key=lambda x: x[0], reverse=True)  # 🔹 커밋된 순서대로 정렬
 
 def update_readme():
     problems = get_solved_problems()
