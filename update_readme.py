@@ -17,9 +17,8 @@ def get_solved_problems():
             continue
         for filename in os.listdir(folder):
             if filename.endswith((".py", ".cpp", ".java")):
-                # ✅ 파일 이름에서 숫자만 추출 (예: "1000.py" → 1000)
                 problem_number = ''.join(filter(str.isdigit, filename))
-                if problem_number:  # 숫자가 포함된 경우만 추가
+                if problem_number:
                     problems.append((problem_number, lang, filename))
     return sorted(problems, key=lambda x: int(x[0]))  # 문제 번호 기준 정렬
 
@@ -28,7 +27,11 @@ def update_readme():
 
     table_header = "| 문제 번호 | 언어 | 파일 |\n|----------|------|------|\n"
     table_content = "\n".join([f"| {num} | {lang} | [{file}]({lang}/{file}) |" for num, lang, file in problems])
-    
+
+    # ✅ 문제 풀이가 없는 경우 기본 메시지 추가
+    if not table_content:
+        table_content = "| 등록된 문제가 없습니다 | - | - |\n"
+
     new_readme = f"""# 🏆 Baekjoon Online Judge Solutions
 
 이 저장소는 [백준 온라인 저지](https://www.acmicpc.net/) 문제 풀이를 기록하는 공간입니다.
