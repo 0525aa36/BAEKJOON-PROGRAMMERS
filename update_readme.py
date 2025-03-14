@@ -17,8 +17,10 @@ def get_solved_problems():
             continue
         for filename in os.listdir(folder):
             if filename.endswith((".py", ".cpp", ".java")):
-                problem_number = filename.split(".")[0]
-                problems.append((problem_number, lang, filename))
+                # ✅ 파일 이름에서 숫자만 추출 (예: "1000.py" → 1000)
+                problem_number = ''.join(filter(str.isdigit, filename))
+                if problem_number:  # 숫자가 포함된 경우만 추가
+                    problems.append((problem_number, lang, filename))
     return sorted(problems, key=lambda x: int(x[0]))  # 문제 번호 기준 정렬
 
 def update_readme():
