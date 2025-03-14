@@ -1,6 +1,4 @@
-# 🏆 Baekjoon Online Judge Solutions
-
-이 저장소는 [백준 온라인 저지](https://www.acmicpc.net/) 문제 풀이를 기록하는 공간입니다.
+# 🏆 BAEKJOON
 
 ## 📂 폴더 구조
 - `Python/` : 파이썬 풀이 코드
