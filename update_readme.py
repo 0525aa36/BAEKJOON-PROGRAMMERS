@@ -1,4 +1,5 @@
 import os
+import subprocess
 import requests
 from bs4 import BeautifulSoup
 
@@ -11,6 +12,25 @@ LANGUAGES = {
 
 # README 파일 경로
 README_PATH = "README.md"
+
+def fetch_problem_title(problem_number):
+    """ 백준 문제 제목 가져오기 """
+    url = f"https://www.acmicpc.net/problem/{problem_number}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    
+    try:
+        response = requests.get(url, headers=headers, timeout=5)
+        response.raise_for_status()
+        
+        soup = BeautifulSoup(response.text, "html.parser")
+        title_tag = soup.find("span", id="problem_title")  # ✅ 문제 제목이 있는 태그
+        
+        return title_tag.text.strip() if title_tag else "제목 없음"
+
+    except requests.RequestException:
+        return "제목 불러오기 실패"
 
 def fetch_problem_title(problem_number):
     """ 백준 문제 제목 가져오기 (차단 회피) """
@@ -30,26 +50,29 @@ def fetch_problem_title(problem_number):
 
     except requests.RequestException:
         return "제목 불러오기 실패"
-    
+
 def get_solved_problems():
-    """ 문제 풀이 기록을 커밋 순서대로 가져오기 (정렬 X) """
+    """ 문제 풀이 기록을 커밋 순서대로 가져오기 """
     problems = []
+    commit_order = get_commit_order()  # 🔹 Git에서 커밋 순서 가져오기
+
     for lang, folder in LANGUAGES.items():
         if not os.path.exists(folder):
             continue
-        for filename in os.listdir(folder):  # ✅ 파일이 추가된 순서대로 가져옴
+        for filename in os.listdir(folder):
             if filename.endswith((".py", ".cpp", ".java")):
                 problem_number = ''.join(filter(str.isdigit, filename))
                 if problem_number:
                     title = fetch_problem_title(problem_number)  # 🔹 문제 제목 가져오기
-                    problems.append((problem_number, title, lang, filename))
-    return problems  # ✅ 정렬 없이 원본 순서 유지
+                    problems.append((commit_order.get(f"{folder}/{filename}", float("inf")), problem_number, title, lang, filename))
+    
+    return sorted(problems, key=lambda x: x[0])  # 🔹 커밋된 순서대로 정렬
 
 def update_readme():
     problems = get_solved_problems()
 
     table_header = "| 문제 번호 | 문제 제목 | 언어 | 파일 |\n|----------|----------|------|------|\n"
-    table_content = "\n".join([f"| {num} | {title} | {lang} | [{file}]({lang}/{file}) |" for num, title, lang, file in problems])
+    table_content = "\n".join([f"| {num} | {title} | {lang} | [{file}]({lang}/{file}) |" for _, num, title, lang, file in problems])
 
     # ✅ 문제 풀이가 없는 경우 기본 메시지 추가
     if not table_content:
@@ -61,7 +84,8 @@ def update_readme():
 
 ## 📂 폴더 구조
 - `Python/` : 파이썬 풀이 코드
-
+- `C++/` : C++ 풀이 코드
+- `Java/` : 자바 풀이 코드
 
 ## 🚀 문제 풀이 기록
 {table_header}{table_content}
