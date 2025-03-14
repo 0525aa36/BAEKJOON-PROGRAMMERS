@@ -12,14 +12,13 @@ LANGUAGES = {
 # README 파일 경로
 README_PATH = "README.md"
 
-import requests
-from bs4 import BeautifulSoup
+
 
 def fetch_problem_title(problem_number):
-    """ 백준 문제 제목 가져오기 """
+    """ 백준 문제 제목 가져오기 (차단 회피) """
     url = f"https://www.acmicpc.net/problem/{problem_number}"
     headers = {
-        "User-Agent": "Mozilla/5.0"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     
     try:
@@ -27,12 +26,12 @@ def fetch_problem_title(problem_number):
         response.raise_for_status()
         
         soup = BeautifulSoup(response.text, "html.parser")
-        title_tag = soup.find("span", id="problem_title")  # ✅ 문제 제목이 있는 태그 확인
+        title_tag = soup.find("span", id="problem_title")  # ✅ 문제 제목이 있는 태그
+        
         return title_tag.text.strip() if title_tag else "제목 없음"
-    
+
     except requests.RequestException:
         return "제목 불러오기 실패"
-
 
 def get_solved_problems():
     problems = []
@@ -76,6 +75,8 @@ def update_readme():
 
     with open(README_PATH, "w", encoding="utf-8") as f:
         f.write(new_readme)
+
+print(fetch_problem_title(1000))  # "A+B" 가 출력되어야 정상 작동!
 
 if __name__ == "__main__":
     update_readme()
