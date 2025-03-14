@@ -10,6 +10,9 @@ on:
   schedule:
     - cron: "0 0 * * *"  # 매일 자정(UTC)에 실행
 
+permissions:
+  contents: write  # ✅ GitHub Actions가 저장소에 푸시할 수 있도록 권한 부여
+
 jobs:
   update-readme:
     runs-on: ubuntu-latest
@@ -17,6 +20,8 @@ jobs:
     steps:
       - name: 저장소 클론
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # ✅ GitHub 기본 인증 토큰 사용
 
       - name: Python 설정
         uses: actions/setup-python@v3
@@ -31,6 +36,4 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions@github.com"
           git add README.md
-          git commit -m "🔄 자동 업데이트: README.md"
-          git push
-        continue-on-error: true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 자동 업데이트: README.md" && git push)
