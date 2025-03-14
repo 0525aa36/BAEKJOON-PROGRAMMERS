@@ -32,24 +32,23 @@ def fetch_problem_title(problem_number):
     except requests.RequestException:
         return "제목 불러오기 실패"
 
-def fetch_problem_title(problem_number):
-    """ 백준 문제 제목 가져오기 (차단 회피) """
-    url = f"https://www.acmicpc.net/problem/{problem_number}"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    }
-    
-    try:
-        response = requests.get(url, headers=headers, timeout=5)
-        response.raise_for_status()
-        
-        soup = BeautifulSoup(response.text, "html.parser")
-        title_tag = soup.find("span", id="problem_title")  # ✅ 문제 제목이 있는 태그
-        
-        return title_tag.text.strip() if title_tag else "제목 없음"
+def get_commit_order():
+    """ Git에서 파일별 커밋 순서를 가져오기 (나중에 커밋한 파일이 밑으로 가게) """
+    result = subprocess.run(
+        ["git", "log", "--pretty=format:%at", "--name-only"],
+        capture_output=True, text=True
+    )
 
-    except requests.RequestException:
-        return "제목 불러오기 실패"
+    commit_order = {}
+    current_timestamp = None
+
+    for line in result.stdout.split("\n"):
+        if line.strip().isdigit():  # UNIX 타임스탬프 값이면
+            current_timestamp = int(line.strip())
+        elif line.strip():  # 파일명이면
+            commit_order[line.strip()] = current_timestamp
+    
+    return commit_order
 
 def get_solved_problems():
     """ 문제 풀이 기록을 커밋 순서대로 가져오기 """
@@ -64,7 +63,8 @@ def get_solved_problems():
                 problem_number = ''.join(filter(str.isdigit, filename))
                 if problem_number:
                     title = fetch_problem_title(problem_number)  # 🔹 문제 제목 가져오기
-                    problems.append((commit_order.get(f"{folder}/{filename}", float("inf")), problem_number, title, lang, filename))
+                    commit_time = commit_order.get(f"{folder}/{filename}", float("inf"))
+                    problems.append((commit_time, problem_number, title, lang, filename))
     
     return sorted(problems, key=lambda x: x[0])  # 🔹 커밋된 순서대로 정렬
 
