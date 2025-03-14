@@ -5,14 +5,12 @@ from bs4 import BeautifulSoup
 # 풀이 코드가 저장된 폴더들
 LANGUAGES = {
     "Python": "Python",
-    "C": "C",
+    "C++": "C++",
     "Java": "Java"
 }
 
 # README 파일 경로
 README_PATH = "README.md"
-
-
 
 def fetch_problem_title(problem_number):
     """ 백준 문제 제목 가져오기 (차단 회피) """
@@ -32,19 +30,20 @@ def fetch_problem_title(problem_number):
 
     except requests.RequestException:
         return "제목 불러오기 실패"
-
+    
 def get_solved_problems():
+    """ 문제 풀이 기록을 커밋 순서대로 가져오기 (정렬 X) """
     problems = []
     for lang, folder in LANGUAGES.items():
         if not os.path.exists(folder):
             continue
-        for filename in os.listdir(folder):
-            if filename.endswith((".py", ".c", ".java")):
+        for filename in os.listdir(folder):  # ✅ 파일이 추가된 순서대로 가져옴
+            if filename.endswith((".py", ".cpp", ".java")):
                 problem_number = ''.join(filter(str.isdigit, filename))
                 if problem_number:
                     title = fetch_problem_title(problem_number)  # 🔹 문제 제목 가져오기
                     problems.append((problem_number, title, lang, filename))
-    return sorted(problems, key=lambda x: int(x[0]))  # 문제 번호 기준 정렬
+    return problems  # ✅ 정렬 없이 원본 순서 유지
 
 def update_readme():
     problems = get_solved_problems()
@@ -75,8 +74,6 @@ def update_readme():
 
     with open(README_PATH, "w", encoding="utf-8") as f:
         f.write(new_readme)
-
-print(fetch_problem_title(1000))  # "A+B" 가 출력되어야 정상 작동!
 
 if __name__ == "__main__":
     update_readme()
