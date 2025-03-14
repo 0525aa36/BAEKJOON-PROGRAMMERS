@@ -28,6 +28,10 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: 필요한 라이브러리 설치  # ✅ requests, beautifulsoup4 설치
+        run: |
+          pip install requests beautifulsoup4
+
       - name: README 업데이트 실행
         run: python update_readme.py
 
