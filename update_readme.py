@@ -6,8 +6,6 @@ from bs4 import BeautifulSoup
 # 풀이 코드가 저장된 폴더들
 LANGUAGES = {
     "Python": "Python",
-    "C++": "C++",
-    "Java": "Java"
 }
 
 # README 파일 경로
@@ -78,9 +76,7 @@ def update_readme():
     if not table_content:
         table_content = "| 등록된 문제가 없습니다 | - | - | - |\n"
 
-    new_readme = f"""# 🏆 Baekjoon Online Judge Solutions
-
-이 저장소는 [백준 온라인 저지](https://www.acmicpc.net/) 문제 풀이를 기록하는 공간입니다.
+    new_readme = f"""# 🏆 BAEKJOON
 
 ## 📂 폴더 구조
 - `Python/` : 파이썬 풀이 코드
