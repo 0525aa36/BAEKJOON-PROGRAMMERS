@@ -1,5 +1,8 @@
-T = int(input())
+N = int(input())
 
-for i in range(T):
-    A,B = map(int, input().split()) # map(function, iterable)
-    print(A+B)
+for i in range(N):
+        print("*" * int(i+1))
+
+# for i in range(int(input())):
+#         print(int(i+1)*"*")
+               
