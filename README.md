@@ -14,6 +14,7 @@
 | 9498 | 시험 성적 | Python | [9498.py](Python/9498.py) |
 | 10869 | 사칙연산 | Python | [10869.py](Python/10869.py) |
 | 2557 | Hello World | Python | [2557.py](Python/2557.py) |
+| 2753 | 윤년 | Python | [2753.py](Python/2753.py) |
 
 ## 📌 사용법
 1. 백준 문제를 풀이하고 저장합니다.
