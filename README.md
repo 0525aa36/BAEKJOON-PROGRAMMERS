@@ -11,6 +11,7 @@
 | 4344 | 평균은 넘겠지 | Python | [4344.py](Python/4344.py) |
 | 1085 | 직사각형에서 탈출 | Python | [1085.py](Python/1085.py) |
 | 15596 | 정수 N개의 합 | Python | [15596.py](Python/15596.py) |
+| 2869 | 달팽이는 올라가고 싶다 | Python | [2869.py](Python/2869.py) |
 | 2562 | 최댓값 | Python | [2562.py](Python/2562.py) |
 | 1152 | 단어의 개수 | Python | [1152.py](Python/1152.py) |
 | 2739 | 구구단 | Python | [2739.py](Python/2739.py) |
@@ -23,6 +24,7 @@
 | 2557 | Hello World | Python | [2557.py](Python/2557.py) |
 | 8958 | OX퀴즈 | Python | [8958.py](Python/8958.py) |
 | 2753 | 윤년 | Python | [2753.py](Python/2753.py) |
+| 1978 | 소수 찾기 | Python | [1978.py](Python/1978.py) |
 | 10950 | A+B - 3 | Python | [10950.py](Python/10950.py) |
 
 ## 📌 사용법
