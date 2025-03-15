@@ -6,3 +6,5 @@ if RA > RB:
     print(RA)
 else:
     print(RB)
+
+print(max(RA, RB))
