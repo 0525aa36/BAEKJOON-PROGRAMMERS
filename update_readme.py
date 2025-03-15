@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 # 풀이 코드가 저장된 폴더들
 LANGUAGES = {
     "Python": "Python",
+    "C++": "C++",
+    "Java": "Java"
 }
 
 # README 파일 경로
@@ -80,8 +82,6 @@ def update_readme():
 
 ## 📂 폴더 구조
 - `Python/` : 파이썬 풀이 코드
-- `C++/` : C++ 풀이 코드
-- `Java/` : 자바 풀이 코드
 
 ## 🚀 문제 풀이 기록
 {table_header}{table_content}
