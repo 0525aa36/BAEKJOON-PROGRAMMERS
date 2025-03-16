@@ -19,6 +19,7 @@
 | 9498 | 시험 성적 | Python | [9498.py](Python/9498.py) |
 | 11654 | 아스키 코드 | Python | [11654.py](Python/11654.py) |
 | 10869 | 사칙연산 | Python | [10869.py](Python/10869.py) |
+| 9020 | 골드바흐의 추측 | Python | [9020.py](Python/9020.py) |
 | 2577 | 숫자의 개수 | Python | [2577.py](Python/2577.py) |
 | 2908 | 상수 | Python | [2908.py](Python/2908.py) |
 | 2557 | Hello World | Python | [2557.py](Python/2557.py) |
