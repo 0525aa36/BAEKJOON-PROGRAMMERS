@@ -71,12 +71,13 @@ def get_solved_problems():
 def update_readme():
     problems = get_solved_problems()
 
-    table_header = "| 문제 번호 | 문제 제목 | 언어 | 파일 |\n|----------|----------|------|------|\n"
-    table_content = "\n".join([f"| {num} | {title} | {lang} | [{file}]({lang}/{file}) |" for _, num, title, lang, file in problems])
+    table_header = "| # | 문제 번호 | 문제 제목 | 언어 | 파일 |\n|---|----------|----------|------|------|\n"
+    table_content = "\n".join([f"| {idx + 1} | {num} | {title} | {lang} | [{file}]({lang}/{file}) |"
+                               for idx, (_, num, title, lang, file) in enumerate(problems)])
 
     # ✅ 문제 풀이가 없는 경우 기본 메시지 추가
     if not table_content:
-        table_content = "| 등록된 문제가 없습니다 | - | - | - |\n"
+        table_content = "| - | 등록된 문제가 없습니다 | - | - | - |\n"
 
     new_readme = f"""# BOJ
 
