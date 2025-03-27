@@ -1,10 +1,7 @@
 import sys
 
-
 N = int(sys.stdin.readline().strip()) # 상근이 카드개수
 N_card = set(map(int, sys.stdin.readline().split())) #상근이카드
-
-
 M = int(sys.stdin.readline().strip()) #확인카드개수
 M_card = list(map(int, sys.stdin.readline().split())) # g확인카드
 
